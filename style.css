@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    background: #8b8b8b;
+    height: 100vh;
+}
