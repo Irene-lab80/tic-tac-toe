@@ -2,16 +2,98 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: 10px;
+    font-family: 'Indie Flower';
 }
 
 h1 {
     text-align: center;
     padding: 20px;
+    font-size: 4rem;
 }
 
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    background: #8b8b8b;
-    height: 100vh;
+body {
+    background: #F5F5F6;
 }
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #E1E2E1;
+}
+
+.box {
+    border: 1px solid ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    font-size: 7rem;
+    cursor: pointer;
+}
+
+.box:hover {
+    background-color: #607D8C;
+}
+
+.choice {
+    padding: 1rem;
+    font-size: 3rem;
+    width: 15rem;
+    text-align: center;
+}
+
+.players {
+    display: flex;
+    justify-content: space-between;
+}
+
+.players div {
+    font-size: 2rem;
+    color: #f78400;
+    font-weight: bold;
+}
+
+.score-x,
+.score-o {
+    font-size: 1em;
+    color: #34515F;
+}
+
+.winner {
+    font-size: 5rem;
+    color: #f78400;
+    padding: 10px;
+}
+
+.new-game-btn {
+    font-size: 2rem;
+    color: #f78400;
+    border: 2px solid #607D8C;
+    padding: 2rem;
+    border-radius: 50%;
+    margin-bottom: 3rem;
+}
+
+.new-game-btn:hover {
+    color: #34515F;
+    border: 3px solid #34515F;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.playing-field {
+    width: 30rem;
+    height: 30rem;
+    background-color: #34515F;
+    display: grid;
+    grid-template-columns: repeat(3, 10rem);
+    grid-template-rows: repeat(3, 10rem);;
+}
+
+
+
