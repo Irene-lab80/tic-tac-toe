@@ -20,57 +20,52 @@ const winningCombo = [
 ];
 
 // Проверка победителя
-function check() {    
+function checkWinner() {    
     for (i = 0; i < winningCombo.length; i++){
         let a = boxes[winningCombo[i][0]];
         let b = boxes[winningCombo[i][1]];
         let c = boxes[winningCombo[i][2]];
         if (a.innerHTML == 'X' && b.innerHTML == 'X' && c.innerHTML == 'X'){
-            result = 'Player-X';
-            
+            result = 1;
             showResult(result);
             scoreUpdate(result);
-            a.style.color = 'brown';
-            b.style.color = 'brown';
-            c.style.color = 'brown';
+            a.style.color = b.style.color = c.style.color = 'brown';
             break
-
         } else if (a.innerHTML == 'O' && b.innerHTML == 'O' && c.innerHTML == 'O'){
-            result = 'Player-O';
+            result = 2;
             showResult(result);
             scoreUpdate(result);
-            a.style.color = 'brown';
-            b.style.color = 'brown';
-            c.style.color = 'brown';
+            a.style.color = b.style.color = c.style.color = 'brown';
             break
-        }  else if (move === 8 ){
-            winner.innerHTML = "It's a draw!"
+        }  else if (move === 9){
+            result = 3;
+            showResult(result);
         };
     };
-    move = move + 1;
 }
 
 // при клике ставит крестик или нолик
 function makeMove(e) {
-    if (e.target.classList.contains('box')) {
-        if (move < 9 && move % 2 === 0 && e.target.innerHTML == '') {
+    if (e.target.classList.contains('box') && e.target.innerHTML === '') {
+        if (move < 9 && move % 2 === 0) {
             e.target.innerHTML = 'X';
-        } else if (move < 9 && move % 2 !== 0 && e.target.innerHTML == ''){
+        } else if (move < 9 && move % 2 !== 0){
             e.target.innerHTML = 'O';
-        } 
+        };
+        move = move + 1;
     };
-    check();
+    checkWinner();
 }
 
 // клик по ячейке 
-playingField.addEventListener('click', makeMove)
+playingField.addEventListener('click', makeMove);
 
 // обновление счета
 function scoreUpdate(player){
-    if (player === 'Player-X'){
+    if (player === 1){
         scoreCountX = scoreCountX + 1;
         scoreX.innerHTML = `: ${scoreCountX}`;
-    } else if (player === 'Player-O'){
+    } else if (player === 2){
         scoreCountO = scoreCountO + 1;
         scoreO.innerHTML = `: ${scoreCountO}`;
     }
@@ -86,7 +81,13 @@ function returnPointerEvents(){
 
 // отображение победителя
 function showResult(victor){
-    winner.innerHTML = `The winner is ${victor} !`;
+    if (victor === 1) {
+        winner.innerHTML = `The winner is Player-X!`;
+    } else if (victor === 2){
+        winner.innerHTML = `The winner is Player-O!`;
+    } else if (victor === 3) {
+        winner.innerHTML = `It's a draw!`;
+    }
     removePointerEvents();
 }
 
