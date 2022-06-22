@@ -1,8 +1,8 @@
 const playingField = document.querySelector('.playing-field');
 const boxes = Array.from(document.querySelectorAll('.box'));
 const newGameBtn = document.querySelector('.new-game-btn');
-const scoreX = document.querySelector('.score-x');
-const scoreO = document.querySelector('.score-o');
+let scoreX = document.querySelector('.score-x');
+let scoreO = document.querySelector('.score-o');
 let scoreCountO = 0;
 let scoreCountX = 0;
 let move = 0;
@@ -18,6 +18,7 @@ const winningCombo = [
     [0, 4, 8],
     [2, 4, 6]
 ];
+const audio = new Audio()
 
 // Проверка победителя
 function checkWinner() {    
@@ -57,17 +58,24 @@ function makeMove(e) {
     checkWinner();
 }
 
-// клик по ячейке 
-playingField.addEventListener('click', makeMove);
+// звук при клике
+function playSound() {
+    audio.src = `./sound.mp3`;
+    audio.currentTime = 0;
+    audio.play();
+}
 
 // обновление счета
 function scoreUpdate(player){
     if (player === 1){
-        scoreCountX = scoreCountX + 1;
+        scoreCountX = scoreCountX * 1 + 1;
         scoreX.innerHTML = `: ${scoreCountX}`;
+        localStorage.setItem('scoreX', scoreCountX);
+
     } else if (player === 2){
-        scoreCountO = scoreCountO + 1;
+        scoreCountO = scoreCountO * 1 + 1;
         scoreO.innerHTML = `: ${scoreCountO}`;
+        localStorage.setItem('scoreO', scoreCountO);
     }
 }
 
@@ -82,11 +90,17 @@ function returnPointerEvents(){
 // отображение победителя
 function showResult(victor){
     if (victor === 1) {
-        winner.innerHTML = `The winner is Player-X!`;
+        winner.innerText = `The winner is Player-X! 
+        Game won in ${move} moves.
+        `;
     } else if (victor === 2){
-        winner.innerHTML = `The winner is Player-O!`;
+        winner.innerText = `The winner is Player-O! 
+        Game won in ${move} moves.
+        `;
     } else if (victor === 3) {
-        winner.innerHTML = `It's a draw!`;
+        winner.innerText = `It's a draw! It was 
+        ${move} moves before a draw.
+        `;
     }
     removePointerEvents();
 }
@@ -102,4 +116,35 @@ function newGame(){
     move = 0;
 }
 
+// local storage
+function scoreUpdateRefresh1(score1) {
+    scoreX.innerHTML = `: ${score1}`;
+} 
+
+function scoreUpdateRefresh2(score2) {
+    scoreO.innerHTML = `: ${score2}`;
+} 
+
+function getLocalStorage1() {
+    if(localStorage.getItem('scoreX')) {
+      scoreCountX = localStorage.getItem('scoreX');
+      scoreUpdateRefresh1(scoreCountX);
+    };
+}
+
+function getLocalStorage2() {
+    if (localStorage.getItem('scoreO')) {
+        scoreCountO = localStorage.getItem('scoreO');
+        scoreUpdateRefresh2(scoreCountO)
+    }
+}
+// клик по ячейке 
+playingField.addEventListener('click', makeMove);
+playingField.addEventListener('click', playSound);
+
+// клик по кнопке новая игра
 newGameBtn.addEventListener('click', newGame);
+
+// get local storage при обновлении страницы
+window.addEventListener('load', getLocalStorage1);
+window.addEventListener('load', getLocalStorage2);
